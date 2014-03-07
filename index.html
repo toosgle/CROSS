@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROSS</title>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="./assets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./assets/app.css">
+    
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand logo active" href="#"><span class="fa fa-cloud-upload"></span>CROSS</a>
+                </div>
+                <div class="collapse navbar-collapse" data-toggle="collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="./index.html" class="select">OVERVIEW</a></li>
+                        <li><a href="./getting-started.html">Getting started</a></li>
+                        <li><a href="./document.html">Documents</a></li>
+                        <li><a href="./api.html">API</a></li>
+                    </ul>
+                </div>
+                <!-- /.nav-collapse -->
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /.navbar --> 
+        <div class="jumbotron hero">
+            <div class="hero-wrap">
+                <div class="container">
+                    <h1>CROSS</h1>
+                    <p>多端融合，提升用户体验</p>
+                    <div class="demo-browser-app">
+                        <div class="demo-mobile demo-mobile-left">
+                            <span href="#" class="demo-mobile-home-button">轮播图web实现</span>
+                            <span href="#" class="demo-mobile-top-button"></span>
+                            <span class="demo-mobile-camera"></span>
+                            <span class="demo-mobile-speaker"></span>
+                            <div class="demo-mobile-body">
+                                <video src="./assets/web.mp4" controls="controls" width="170" height="250">
+                                您的浏览器不支持 video 标签。
+                                </video>
+                            </div>
+                        </div>
+                        <div class="demo-mobile demo-mobile-right">
+                            <span href="#" class="demo-mobile-home-button">轮播图native实现</span>
+                            <span href="#" class="demo-mobile-top-button"></span>
+                            <span class="demo-mobile-camera"></span>
+                            <span class="demo-mobile-speaker"></span>
+                            <div class="demo-mobile-body">
+                                <video src="./assets/native.mp4" controls="controls" width="170" height="250">
+                                您的浏览器不支持 video 标签。
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fetature container">
+            <div class="row">
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>超高交互性能</h2>
+                    <p>缩小Web App和Native App的性能差距是轻组件的重要目标，通过轻组件能够让你的Web App拥有媲美Native App的交互、渲染能力，用户的交互体验将更加的顺畅。<a href="./fps.html">性能数据对比</a></p>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>智能环境适配</h2>
+                    <p>轻组件从设计层面就融入了多环境智能适配方案，使用了轻组件的Web App不用担心运行环境问题，无论是在系统自带浏览器中，亦或是UC、百度框、WebView等等，都能直接运行。</p>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>极致交互体验</h2>
+                    <p>轻组件除了给web页面提供访问本地设备的能力外，还能够在web页面中嵌入Native功能，使用户能够享受到与本地APP同等的交互体验。<a href="./document.html">典型案例</a></p>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>超低学习成本</h2>
+                    <p>轻组件拥有Native组件同等的交互、渲染能力，但在使用时并不需要开发者编写Native代码，所有API均为纯Web实现，学习成本几乎为零。</p>
+                </div>
+            </div>
+            <!--/row-->
+        </div>
+
+        <div class="container btn_container">
+            <p><a class="btn btn-primary btn-lg" href="./getting-started.html" role="button">Getting Started</a></p>
+        </div>
+
+
+        <div id="footer" class="footer">
+            <div class="footer-inner container">
+                <div class="row">
+                    <p class="copyright">&copy;2014 Baidu Fex Team</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var navbarToggle = document.querySelector('.navbar-toggle');
+        var navbarCollapse = document.querySelector('.navbar-collapse');
+        navbarToggle.onclick = function(){
+            if( navbarCollapse.getAttribute('data-toggle') === 'collapse' ){
+                navbarCollapse.className = "navbar-collapse";
+                navbarCollapse.setAttribute('data-toggle', '');
+            }else{
+                navbarCollapse.className = "navbar-collapse collapse";
+                navbarCollapse.setAttribute('data-toggle', 'collapse');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROSS</title>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="./assets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./assets/app.css">
+    <link rel="stylesheet" type="text/css" href="./assets/code.css">
+    <script type="text/javascript" src="./assets/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="./assets/bootstrap.js"></script>
+</head>
+
+<body data-spy="scroll" data-target=".post-toc" data-offset="20">
+    <div id="wrapper">
+        <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand logo active" href="#"><span class="fa fa-cloud-upload"></span>CROSS</a>
+                </div>
+                <div class="collapse navbar-collapse" data-toggle="collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="./index.html">OVERVIEW</a></li>
+                        <li><a href="./getting-started.html">Getting started</a></li>
+                        <li><a href="./document.html" class="select">Documents</a></li>
+                        <li><a href="./api.html">API</a></li>
+                    </ul>
+                </div>
+                <!-- /.nav-collapse -->
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /.navbar --> 
+
+        <div class="container api-container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="post-toc bs-sidebar" data-spy="affix" data-offset-top="0">
+                        <ul class="nav bs-sidenav">   
+                            <li><a href="./document.html">CROSS开发手册</a></li>
+                            <li><a href="">Runtime插件开发</a></li>
+                            <li><a href="">Runtime调试方法</a></li>
+                            <li><a href="">PhoneGap插件开发</a></li>
+                            <li class="active"><a href="./fps.html">性能对比数据</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="page-container">
+
+
+
+
+
+
+
+<div class="markdown-body">
+      <h2>测试目标：Gallery组件</h2>
+
+<ul>
+<li>native 端: 基于 android.support.v4 包的 ViewPager 类进行开发</li>
+<li>web 端:基于 Flipsnap 开发</li>
+</ul><h2>测试方法</h2>
+
+<p>对 Gallery 进行频繁的切换操作，每秒钟对 fps 进行一次统计，当切换到最后一张图时，取得该轮测试的 fps 最大值 / 最小值 / 平均值</p>
+
+<h2>测试平台</h2>
+
+<ul>
+<li>android 4.0 及以上均使用 Chrome</li>
+<li>android 4.0 以下，因为不支持 Chrome，均使用了系统自带浏览器</li>
+</ul><h2>测试结果</h2>
+
+<table>
+<thead><tr>
+<th>平台</th>
+<th>Native组件</th>
+<th>Web组件</th>
+<th>fps提升率</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>LG Nexus 5 (原生4.4 / 4.4) <br />Chrome</td>
+<td>58</td>
+<td>35</td>
+<td>65.71%</td>
+</tr>
+<tr>
+<td>小米 1 (CM 10.1 / 4.2.2) <br />Chrome</td>
+<td>48</td>
+<td>19</td>
+<td>152.63%</td>
+</tr>
+<tr>
+<td>小米 2A (MIUI v5 / 4.1.1) <br />Chrome</td>
+<td>48</td>
+<td>17</td>
+<td>182.35%</td>
+</tr>
+<tr>
+<td>魅族 MX (Flyme 2.1.3 / 4.1) <br />Chrome</td>
+<td>46</td>
+<td>22</td>
+<td>109.09%</td>
+</tr>
+<tr>
+<td>三星 GT-I9300 (未知 / 4.2.2) <br />Chrome</td>
+<td>45</td>
+<td>21</td>
+<td>114.29%</td>
+</tr>
+<tr>
+<td>三星 GT-S7562i (未知 / 4.0.4) <br />Chrome</td>
+<td>31</td>
+<td>6</td>
+<td>416.67%</td>
+</tr>
+<tr>
+<td>HTC Desire S S510e (HTC Sense 3.0 / 2.3.5) <br />系统自带浏览器</td>
+<td>32</td>
+<td>18</td>
+<td>77.78%</td>
+</tr>
+<tr>
+<td>HTC Legend (未知 / 2.3.7) <br />系统自带浏览器</td>
+<td>30</td>
+<td>24</td>
+<td>25.00%</td>
+</tr>
+<tr>
+<td>WOHTC G36 (原生 / 4.0.4) <br />Chrome</td>
+<td>41</td>
+<td>16</td>
+<td>156.25%</td>
+</tr>
+<tr>
+<td>魅族 MX2 (Flyme 3.2 / 4.2) <br />Chrome</td>
+<td>49</td>
+<td>21</td>
+<td>133.33%</td>
+</tr>
+</tbody>
+</table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="footer" class="footer">
+            <div class="footer-inner container">
+                <div class="row">
+                    <p class="copyright">&copy;2014 Baidu Fex Team</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var navbarToggle = document.querySelector('.navbar-toggle');
+        var navbarCollapse = document.querySelector('.navbar-collapse');
+        navbarToggle.onclick = function(){
+            if( navbarCollapse.getAttribute('data-toggle') === 'collapse' ){
+                navbarCollapse.className = "navbar-collapse";
+                navbarCollapse.setAttribute('data-toggle', '');
+            }else{
+                navbarCollapse.className = "navbar-collapse collapse";
+                navbarCollapse.setAttribute('data-toggle', 'collapse');
+            }
+        }
+    </script>
+</body>
+</html>
