@@ -60,6 +60,9 @@
                                 </video>
                             </div>
                         </div>
+
+                        <div class="play-button" title="播放对比视频"></div>
+
                         <div class="demo-mobile demo-mobile-right">
                             <span href="#" class="demo-mobile-home-button">轮播图native实现</span>
                             <span href="#" class="demo-mobile-top-button"></span>
@@ -111,6 +114,7 @@
             </div>
         </div>
     </div>
+
     <script type="text/javascript">
         var navbarToggle = document.querySelector('.navbar-toggle');
         var navbarCollapse = document.querySelector('.navbar-collapse');
@@ -122,6 +126,16 @@
                 navbarCollapse.className = "navbar-collapse collapse";
                 navbarCollapse.setAttribute('data-toggle', 'collapse');
             }
+        }
+
+        document.querySelector('.play-button').onclick = function(){
+            document.querySelectorAll('video')[0].play();
+            document.querySelectorAll('video')[1].play();
+            document.querySelector('.play-button').style.display = 'none';
+
+            setTimeout(function(){
+                document.querySelector('.play-button').style.display = '';                
+            }, 20000);
         }
     </script>
 </body>
