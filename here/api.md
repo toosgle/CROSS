@@ -27,6 +27,7 @@ Here.api.post = function(url, input, callbacks);
 
 ## 前台接口
 ### 获取用户信息
+[http://localhost/end/here/here/api/get_user?username=jianling](http://localhost/end/here/here/api/get_user?username=jianling)
 ```javascript
 url: /api/get_user
 input: {
@@ -39,9 +40,9 @@ return: {
     photos {Array}
 }
 ```
-[http://localhost/end/here/here/api/get_user?username=jianling](http://localhost/end/here/here/api/get_user?username=jianling)
 
 ### 获取照片评论
+[http://localhost/end/here/here/api/get_comments?photoId=1](http://localhost/end/here/here/api/get_comments?photoId=1)
 ```javascript
 url: /api/get_comments
 input: {
@@ -56,10 +57,10 @@ return: {
                     }       
 }
 ```
-[http://localhost/end/here/here/api/get_comments?photoId=1](http://localhost/end/here/here/api/get_comments?photoId=1)
 
 
 ### 获取照片关注
+[http://localhost/end/here/here/api/get_follows?photoId=1](http://localhost/end/here/here/api/get_follows?photoId=1)
 ```javascript
 url: /api/get_follows
 input: {
@@ -73,9 +74,9 @@ return: {
                     }
 }
 ```
-[http://localhost/end/here/here/api/get_follows?photoId=1](http://localhost/end/here/here/api/get_follows?photoId=1)
 
 ### 获取一组照片（只返回被所有者merge的照片）
+[http://localhost/end/here/here/api/get_group?groupId=1](http://localhost/end/here/here/api/get_group?groupId=1)
 ```javascript
 url: /api/get_group
 input: {
@@ -99,9 +100,9 @@ return: {
                     }
 }
 ```
-[http://localhost/end/here/here/api/get_group?groupId=1](http://localhost/end/here/here/api/get_group?groupId=1)
 
 ### 发起关注
+[http://localhost/end/here/here/api/get_group?groupId=1](http://localhost/end/here/here/api/get_group?groupId=1)
 ```javascript
 url: /api/follow
 input: {
@@ -109,10 +110,10 @@ input: {
 }
 ```
 
-[http://localhost/end/here/here/api/get_group?groupId=1](http://localhost/end/here/here/api/get_group?groupId=1)
 
 
 ### 发起评论
+[http://localhost/end/here/here/api/comment?photoId=1&content=fafds](http://localhost/end/here/here/api/comment?photoId=1&content=fafds)
 ```javascript
 url: /api/comment
 input: {
@@ -120,7 +121,6 @@ input: {
     content {String}
 }
 ```
-[http://localhost/end/here/here/api/comment?photoId=1&content=fafds](http://localhost/end/here/here/api/comment?photoId=1&content=fafds)
 
 
 ### 上传照片
