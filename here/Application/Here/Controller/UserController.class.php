@@ -3,6 +3,10 @@ namespace Here\Controller;
 use Think\Controller;
 class UserController extends Controller {
 
+    public function __construct(){
+        parent::__construct();
+    }
+
     /**
      * 登录
      * @param  string $username 用户名
