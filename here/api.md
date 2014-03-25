@@ -11,7 +11,6 @@
  * @param string url 数据接口的url
  * @param json input 输入
  * @param json callbacks 提交后的处理函数定义，含错误(error)和成功(success)两个
- * @param string 返回类型，和jquery的接口一致，默认为json
  */
 Here.api.get = function(url, input, callbacks, type);
 
