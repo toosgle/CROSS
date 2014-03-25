@@ -40,6 +40,7 @@ class UserController extends Controller {
             die();
         }
 
+        $_SESSION['userid'] = $check['id'];
         $_SESSION['username'] = $username;
         echo '登录成功，用户名：'.$_SESSION['username'];
 
@@ -64,7 +65,7 @@ class UserController extends Controller {
 
         $username = trim($username);
         $password = trim($password);
-        $nickname = trim($nickname);
+        $nickname = htmlentities(trim($nickname));
 
         if($username == '' || $password == ''){
             echo '用户名或者密码不能为空！';
