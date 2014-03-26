@@ -184,9 +184,9 @@ class ApiController extends Controller {
             die();
         }
 
-        $result = M('Comment')->data(array('photoId' => $photoId, 'userId' => $userId, 'content' => $content))->add();
+        $insert = M('Comment')->data(array('photoId' => $photoId, 'userId' => $userId, 'content' => $content))->add();
 
-        if(false == $result){
+        if(false == $insert){
             $result['no'] = 0;
             $result['data']['message'] = '评论失败';
         }else{
@@ -194,6 +194,24 @@ class ApiController extends Controller {
         }
 
         echo json_encode($result);
+    }
+
+    public function img($hash = ''){
+        $types = array('jpg' => 'image/jpeg',
+                      'jpeg' => 'image/jpeg',
+                      'png' => 'image/png');
+        $type = preg_replace('/[^.]*\./', '', $hash);
+        $host = 'bcs.duapp.com'; //online
+        $ak = BCS_AK;
+        $sk = BCS_SK;
+        $bucket = 'here-photo';
+        $baidu_bcs = new \BaiduBCS ( $ak, $sk, $host );
+
+        header('Content-type:'.$types[$type]);
+
+        $response = $baidu_bcs->get_object ( $bucket, $hash );
+
+        echo $response->body;
     }
 
     /**
@@ -230,9 +248,9 @@ class ApiController extends Controller {
                         'direction' => $direction,
                         'hash' => $response
                      );
-        $result = M('Photo')->data($data)->add();
+        $insert = M('Photo')->data($data)->add();
 
-        if(false == $result){
+        if(false == $insert){
             $result['no'] = 0;
             $result['data']['message'] = '上传失败';
         }else{
@@ -262,12 +280,12 @@ class ApiController extends Controller {
         $opt ['curlopts'] = array (
                 CURLOPT_CONNECTTIMEOUT => 10, 
                 CURLOPT_TIMEOUT => 1800 );
-        $opt ['Headers'] = array(
-                                    'Content-Type' => $type
-                                );
         $response = $baidu_bcs->create_object ( $bucket, $object, $fileUpload, $opt );
         
         if($response->isOK()){
+
+            $meta = array ("Content-Type" => $type );
+            $response = $baidu_bcs->set_object_meta ( $bucket, $object, $meta );
             return $object;
         }else{
             return false;
