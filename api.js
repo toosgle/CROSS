@@ -10,8 +10,8 @@ Here.api = {
     get: function( url, input, callbacks ){
         input._t_ = Date.now();
 
-        $.get( url, input, function( response ){
-            if ( 0 === response.no ) {
+        $.get( 'http://localhost/end/here/here' + url, input, function( response ){
+            if ( 1 === response.no ) {
                 if ( $.isFunction(callbacks.success) ) {
                     callbacks.success( response.data );
                 }
@@ -37,8 +37,8 @@ Here.api = {
             url += "?_t=" + Date.now();
         }
 
-        $.post( url, input, function( response ) {
-            if ( 0 === response.no ) {
+        $.post( 'http://localhost/end/here/here' + url, input, function( response ) {
+            if ( 1 === response.no ) {
                 if ( $.isFunction(callbacks.success) ) {
                     callbacks.success( response.data );
                 }

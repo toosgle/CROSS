@@ -102,7 +102,7 @@ return: {
 ```
 
 ### 发起关注
-[http://localhost/end/here/here/api/get_group?groupId=1](http://localhost/end/here/here/api/get_group?groupId=1)
+[http://localhost/end/here/here/api/follow](http://localhost/end/here/here/api/follow)
 ```javascript
 url: /api/follow
 input: {
@@ -113,7 +113,7 @@ input: {
 
 
 ### 发起评论
-[http://localhost/end/here/here/api/comment?photoId=1&content=fafds](http://localhost/end/here/here/api/comment?photoId=1&content=fafds)
+[http://localhost/end/here/here/api/comment](http://localhost/end/here/here/api/comment)
 ```javascript
 url: /api/comment
 input: {
@@ -123,13 +123,18 @@ input: {
 ```
 
 
-### 上传照片
+### 上传照片数据
+[http://localhost/end/here/here/api/upload](http://localhost/end/here/here/api/upload)
 ```javascript
 url: /api/upload
 input: {
     userId {Integer}
     groupId {Integer}
     file {File}
+    position {String}
+    environment {String}
+    measurement {String}
+    direction {String}
 }
 return: {
     url {String}

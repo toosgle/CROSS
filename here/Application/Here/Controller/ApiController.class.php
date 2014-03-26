@@ -1,18 +1,25 @@
 <?php
 namespace Here\Controller;
 use Think\Controller;
+import('Here.BCS.bcs');
 class ApiController extends Controller {
 
     public function __construct(){
+        $result = array(
+                            'no' => 1,
+                            'data' => array()
+                        );
         $action = preg_replace('/\/.*\//', '', __ACTION__);
         if(!method_exists($this, $action)){
-            echo '非法操作';
+            $result['data']['message'] = '非法操作';
+            echo json_encode($result);
             die();
         }
 
         if(in_array($action, array('follow', 'comment'))){
             if(!isset($_SESSION['username'])){
-                echo '请先登录';
+                $result['data']['message'] = '请先登录';
+                echo json_encode($result);
                 die();
             }
         }
@@ -188,4 +195,83 @@ class ApiController extends Controller {
 
         echo json_encode($result);
     }
+
+    /**
+     * 上传照片数据
+     * @param  Integer userId       用户id，从session中取
+     * @param  Integer groupId      照片组id
+     * @param  File    file         文件句柄
+     * @param  String  position     位置信息
+     * @param  String  environment  环境信息
+     * @param  String  measurement  照片尺寸
+     * @param  Integer direction    横竖屏
+     * @return JSON                 照片线上URL
+     */
+    public function upload($groupId = NULL, $position = NULL, $environment = NULL, $measurement = NULL, $direction = NULL ){
+        $response = $this->uploadImageToBCS();
+        $result = array(
+                            'no' => 1,
+                            'data' => array()
+                        );
+
+        if(!$response){
+            $result['no'] = 0;
+            $result['data']['message'] = '上传失败';
+            echo json_encode($result);
+            die();
+        }
+
+        $data = array(
+                        'userId' => $_SESSION['userid'],
+                        'groupId' => $groupId,
+                        'position' => $position,
+                        'environment' => $environment,
+                        'measurement' => $measurement,
+                        'direction' => $direction,
+                        'hash' => $response
+                     );
+        $result = M('Photo')->data($data)->add();
+
+        if(false == $result){
+            $result['no'] = 0;
+            $result['data']['message'] = '上传失败';
+        }else{
+            $result['data']['url'] = 'http://bcs.duapp.com/here-photo/'.$response.'?sign=MBO:qm7QzugDqd3b7D7Djkq5Q9ZY:MZnTlc7v%2BHKvbcQlAD0TrshQwqI%3D&response-cache-control=private';
+        }
+
+        echo json_encode($result);
+    }
+
+    public function uploadImageToBCS(){
+        $type = array('image/jpeg', 'image/png');
+        if(!in_array($_FILES['file']['type'], $type)){
+            return false;
+        }
+
+        $host = 'bcs.duapp.com'; //online
+        $ak = BCS_AK;
+        $sk = BCS_SK;
+        $bucket = 'here-photo';
+        $object = '/'.$_SESSION['username'].'/'.md5(microtime(true)).preg_replace('/[^.]*\./', '.', $_FILES['file']['name']);
+        $fileUpload = $_FILES['file']['tmp_name'];
+        $baidu_bcs = new \BaiduBCS ( $ak, $sk, $host );
+
+        $opt = array ();
+        $opt ['acl'] = \BaiduBCS::BCS_SDK_ACL_TYPE_PUBLIC_WRITE;
+        $opt [\BaiduBCS::IMPORT_BCS_LOG_METHOD] = "bs_log";
+        $opt ['curlopts'] = array (
+                CURLOPT_CONNECTTIMEOUT => 10, 
+                CURLOPT_TIMEOUT => 1800 );
+        $opt ['Headers'] = array(
+                                    'Content-Type' => $type
+                                );
+        $response = $baidu_bcs->create_object ( $bucket, $object, $fileUpload, $opt );
+        
+        if($response->isOK()){
+            return $object;
+        }else{
+            return false;
+        }
+    }
+
 }

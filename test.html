@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>接口测试</title>
+        <script type="text/javascript" src="./zepto.js"></script>
+        <script type="text/javascript" src="./api.js"></script>
+    </head>
+    <body>
+        <p><label>获取用户信息</label> <button id="get_user">获取用户信息</button></p>
+
+        <p><label>获取照片评论</label> <button id="get_comments">获取照片评论</button></p>
+
+        <p><label>获取照片关注</label> <button id="get_follows">获取照片关注</button></p>
+
+        <p><label>获取一组照片</label> <button id="get_group">获取一组照片</button></p>
+
+        <fieldset>
+            <legend>发起关注</legend> 
+            <form name="registerForm" method="post" action="http://localhost/end/here/here/api/follow"> 
+                <p>
+                    <label>photoId</label><input type="text" name="photoId" />
+                </p>
+                <p>
+                    <input type="submit" name="submit" value=" 确 定 " id="follow"/> 
+                </p> 
+            </form> 
+        </fieldset>
+
+        <fieldset>
+            <legend>发起评论</legend> 
+            <form name="registerForm" method="post" action="http://localhost/end/here/here/api/comment"> 
+                <p>
+                    <label>photoId</label><input type="text" name="photoId" />
+                </p>
+                <p>
+                    <label>content</label><input type="text" name="content" />
+                </p>
+                <p>
+                    <input type="submit" name="submit" value=" 确 定 " id="comment"/> 
+                </p> 
+            </form> 
+        </fieldset>
+
+        <fieldset>
+            <legend>上传图片</legend>
+            <form name="registerForm" method="post" action="http://localhost/end/here/here/api/upload" enctype="multipart/form-data"> 
+                <p>
+                    <input type="file" name="file" id="file" />
+                </p>
+                <p>
+                    <input type="submit" name="submit" value=" 确 定 " id="upload"/> 
+                </p> 
+            </form> 
+        </fieldset>
+
+        <script type="text/javascript">
+            $('#get_user').click(function(){
+                Here.api.get('/api/get_user', {
+                    username: 'jianling'
+                }, {
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+
+            $('#get_comments').click(function(){
+                Here.api.get('/api/get_comments', {
+                    photoId: 3
+                }, {
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+
+            $('#get_follows').click(function(){
+                Here.api.get('/api/get_follows', {
+                    photoId: 3
+                }, {
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+
+            $('#get_group').click(function(){
+                Here.api.get('/api/get_group', {
+                    groupId: 1
+                }, {
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+
+            $('#follow').click(function(e){
+                e.preventDefault();
+                Here.api.post('/api/follow', {
+                    photoId: 3
+                }, {
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+
+            $('#comment').click(function(e){
+                e.preventDefault();
+                Here.api.post('/api/comment', {
+                    photoId: 3,
+                    content: 'hahaha' + Date.now()
+                }, {
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+
+            // $('#upload').click(function(e){
+            //     e.preventDefault();
+            //     Here.api.post('/api/upload', {
+            //         photoId: 3,
+            //         file: $('#file')[0].value,
+            //         position: '北纬32°，东经123°',
+            //         measurement: '1280*760'
+            //     }, {
+            //         success: function(data){
+            //             console.log(data);
+            //         },
+            //         error: function(data){
+            //             console.log(data);
+            //         }
+            //     });
+            // });
+        </script>
+    </body>
+</html>

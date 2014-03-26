@@ -19,29 +19,28 @@ class UserController extends Controller {
         }
 
         if($_SESSION['username']){
-            echo '您已登录，用户名：'.$_SESSION['username'];
-            die();
+            exit('您已登录，用户名：'.$_SESSION['username']);
         }
 
         $username = trim($username);
         $password = trim($password);
 
         if($username == '' || $password == ''){
-            echo '用户名或者密码不能为空！';
-            die();
+            exit('用户名或者密码不能为空！');
+        }
+        if(!preg_match('/[\d_\w]{5,10}/', $username)){
+            exit('用户名不符合规则');
         }
 
         $user = M("User")->where('username="'.$username.'"')->find();
 
         if($user == NULL){
-            echo '不存在此用户';
-            die();
+            exit('不存在此用户');
         }
 
         $check = M("User")->where('username="'.$username.'" AND password="'.md5($password).'"')->find();
         if($check == NULL){
-            echo '密码错误';
-            die();
+            exit('密码错误');
         }
 
         $_SESSION['userid'] = $check['id'];
@@ -72,22 +71,23 @@ class UserController extends Controller {
         $nickname = htmlentities(trim($nickname));
 
         if($username == '' || $password == ''){
-            echo '用户名或者密码不能为空！';
-            die();
+            exit('用户名或者密码不能为空！');
+        }
+        if(!preg_match('/[\d_\w]{5,10}/', $username) || !preg_match('/[\d_\w]{5,10}/', $password)){
+            exit('用户名或密码不符合规则');
         }
 
         $user = M("User")->where('username="'.$username.'"')->find();
 
         if($user !== NULL){
-            echo '此用户已存在';
-            die();
+            exit('此用户已存在');
         }
 
         M('User')->data(array('username' => $username,
                               'password' => md5($password),
                               'nickname' => $nickname))->add();
 
-        echo '注册成功';
+        exit('注册成功');
     }
 
 }
