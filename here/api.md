@@ -140,3 +140,12 @@ return: {
     url {String}
 }
 ```
+
+### 获取照片
+[http://localhost/end/here/here/api/img](http://localhost/end/here/here/api/img)
+```javascript
+url: /api/img
+input: {
+    hash {String}
+}
+```

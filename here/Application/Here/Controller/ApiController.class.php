@@ -207,11 +207,12 @@ class ApiController extends Controller {
         $bucket = 'here-photo';
         $baidu_bcs = new \BaiduBCS ( $ak, $sk, $host );
 
-        header('Content-type:'.$types[$type]);
+        // header('Content-type:'.$types[$type]);
 
         $response = $baidu_bcs->get_object ( $bucket, $hash );
 
         echo $response->body;
+        // echo '<img src="'.$response->body.' />';
     }
 
     /**
@@ -225,8 +226,8 @@ class ApiController extends Controller {
      * @param  Integer direction    横竖屏
      * @return JSON                 照片线上URL
      */
-    public function upload($groupId = NULL, $position = NULL, $environment = NULL, $measurement = NULL, $direction = NULL ){
-        $response = $this->uploadImageToBCS();
+    public function upload($file = '', $type = '', $groupId = NULL, $position = NULL, $environment = NULL, $measurement = NULL, $direction = NULL ){
+        $response = $this->uploadImageToBCS($file, $type);
         $result = array(
                             'no' => 1,
                             'data' => array()
@@ -260,9 +261,9 @@ class ApiController extends Controller {
         echo json_encode($result);
     }
 
-    public function uploadImageToBCS(){
-        $type = array('image/jpeg', 'image/png');
-        if(!in_array($_FILES['file']['type'], $type)){
+    public function uploadImageToBCS($file = '', $type = ''){
+        $types = array('image/jpeg' => '.jpg', 'image/png' => '.png');
+        if(!array_key_exists($type, $types)){
             return false;
         }
 
@@ -270,8 +271,8 @@ class ApiController extends Controller {
         $ak = BCS_AK;
         $sk = BCS_SK;
         $bucket = 'here-photo';
-        $object = '/'.$_SESSION['username'].'/'.md5(microtime(true)).preg_replace('/[^.]*\./', '.', $_FILES['file']['name']);
-        $fileUpload = $_FILES['file']['tmp_name'];
+        $object = '/'.$_SESSION['username'].'/'.md5(microtime(true)).$types[$type];
+        $fileUpload = $file;
         $baidu_bcs = new \BaiduBCS ( $ak, $sk, $host );
 
         $opt = array ();
@@ -280,12 +281,12 @@ class ApiController extends Controller {
         $opt ['curlopts'] = array (
                 CURLOPT_CONNECTTIMEOUT => 10, 
                 CURLOPT_TIMEOUT => 1800 );
-        $response = $baidu_bcs->create_object ( $bucket, $object, $fileUpload, $opt );
+        $response = $baidu_bcs->create_object_by_content ( $bucket, $object, $fileUpload, $opt );
         
         if($response->isOK()){
 
-            $meta = array ("Content-Type" => $type );
-            $response = $baidu_bcs->set_object_meta ( $bucket, $object, $meta );
+            // $meta = array ("Content-Type" => $type );
+            // $response = $baidu_bcs->set_object_meta ( $bucket, $object, $meta );
             return $object;
         }else{
             return false;
