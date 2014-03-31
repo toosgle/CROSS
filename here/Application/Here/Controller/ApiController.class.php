@@ -41,7 +41,10 @@ class ApiController extends Controller {
                             'data' => array()
                         );
 
-        $user = M("User")->where('username="'.$username.'"')->find();
+        $user = M("User")
+                ->where('username="'.$username.'"')
+                ->field('username,nickname')
+                ->find();
 
         if( $user === NULL ){
             $result['no'] = 0;
@@ -97,6 +100,99 @@ class ApiController extends Controller {
     }
 
     /**
+     * 获取推荐图集
+     * @return JSON     推荐图集
+     */
+    public function get_recommends(){
+        $groups = M("Group")
+                    ->where('group.id > 0')
+                    ->join('photo ON photo.id = group.cover')
+                    ->field('group.id,group.name,photo.hash')
+                    ->limit(4)->select();
+        $result = array(
+                            'no' => 1,
+                            'data' => $groups
+                        );
+
+        echo json_encode($result);
+    }
+
+    /**
+     * 获取热门图集
+     * @return JSON     热门图集
+     */
+    public function get_hots(){
+        $photos = M("Group")
+                    ->where('group.id > 0')
+                    ->join('photo ON photo.groupId = group.id')
+                    ->field('group.id as groupId,group.name,photo.hash')
+                    // ->limit(4)
+                    ->select();
+
+        $groups = array();
+        foreach ($photos as $photo) {
+            if( !isset($groups[$photo['groupId']]) ){
+                $groups[$photo['groupId']] = array(
+                                                    'id' => $photo['groupId'],
+                                                    'name' => $photo['name'],
+                                                    'photos' => array()
+                                                );
+            }
+            count($groups[$photo['groupId']]['photos']) < 4 && 
+                array_push($groups[$photo['groupId']]['photos'], $photo['hash']);
+        }
+
+        $newGroups = array();
+        foreach ($groups as $group) {
+            array_push($newGroups, $group);
+        }
+
+
+        $result = array(
+                            'no' => 1,
+                            'data' => $newGroups
+                        );
+
+        echo json_encode($result);
+    }
+
+    /**
+     * 获取身边图集
+     * @return JSON     身边图集
+     */
+    public function get_beside(){
+        $groups = M("Group")
+                    ->where('group.id > 0')
+                    ->join('photo ON photo.id = group.cover')
+                    ->field('group.id,group.name,photo.hash')
+                    ->limit(4)->select();
+        $result = array(
+                            'no' => 1,
+                            'data' => $groups
+                        );
+
+        echo json_encode($result);
+    }
+
+    /**
+     * 获取收藏图集
+     * @return JSON     收藏图集
+     */
+    public function get_favorites(){
+        $groups = M("Group")
+                    ->where('group.id > 0')
+                    ->join('photo ON photo.id = group.cover')
+                    ->field('group.id,group.name,photo.hash')
+                    ->limit(4)->select();
+        $result = array(
+                            'no' => 1,
+                            'data' => $groups
+                        );
+
+        echo json_encode($result);
+    }
+
+    /**
      * 获取一组照片（只返回被所有者merge的照片）
      * @param  Integer $groupId 照片组的id
      * @return JSON             照片组
@@ -108,7 +204,14 @@ class ApiController extends Controller {
                         );
 
         $group = M("Group")->where('id="'.$groupId.'"')->find();
-        $photos = M("Photo")->where('groupId="'.$groupId.'" AND accepted=1')->select();
+        $photos = M("Photo")
+                    ->where('groupId="'.$groupId.'" AND accepted=1')
+                    ->join('user ON photo.userId = user.id')
+                    ->field('photo.position,photo.environment,photo.measurement,photo.direction,photo.time,photo.hash,user.username,user.nickname')
+                    ->select();
+
+
+        // TODO 查询follow
 
         $group['photos'] = $photos;
 
@@ -133,6 +236,13 @@ class ApiController extends Controller {
                         );
 
         $userId = $_SESSION['userid'];
+
+        if( !$userId ){
+            $result['no'] = 0;
+            $result['data']['message'] = '请先登录';
+            echo json_encode($result);
+            die();
+        }
 
         $follow = M('Follow')->where('photoId="'.$photoId.'" AND userId="'.$userId.'"')->find();
         if($follow != NULL){
@@ -167,6 +277,13 @@ class ApiController extends Controller {
 
 
         $userId = $_SESSION['userid'];
+
+        if( !$userId ){
+            $result['no'] = 0;
+            $result['data']['message'] = '请先登录';
+            echo json_encode($result);
+            die();
+        }
 
         if('' == $content){
             $result['no'] = 0;
@@ -207,12 +324,13 @@ class ApiController extends Controller {
         $bucket = 'here-photo';
         $baidu_bcs = new \BaiduBCS ( $ak, $sk, $host );
 
-        // header('Content-type:'.$types[$type]);
+        header('Content-type:'.$types[$type]);
+        header('Cache-Control: max-age='.(365*24*60*60));
+        header("Expires: ".date('D, d M Y h:i:s ', time() + (365 * 24 * 60 * 60)).'GMT');
 
         $response = $baidu_bcs->get_object ( $bucket, $hash );
 
         echo $response->body;
-        // echo '<img src="'.$response->body.' />';
     }
 
     /**
@@ -226,12 +344,21 @@ class ApiController extends Controller {
      * @param  Integer direction    横竖屏
      * @return JSON                 照片线上URL
      */
-    public function upload($file = '', $type = '', $groupId = NULL, $position = NULL, $environment = NULL, $measurement = NULL, $direction = NULL ){
-        $response = $this->uploadImageToBCS($file, $type);
+    public function upload($groupId = NULL, $position = NULL, $environment = NULL, $measurement = NULL, $direction = NULL ){
         $result = array(
                             'no' => 1,
                             'data' => array()
                         );
+        $userId = $_SESSION['userid'];
+
+        if( !$userId ){
+            $result['no'] = 0;
+            $result['data']['message'] = '请先登录';
+            echo json_encode($result);
+            die();
+        }
+
+        $response = $this->uploadImageToBCS();
 
         if(!$response){
             $result['no'] = 0;
@@ -241,7 +368,7 @@ class ApiController extends Controller {
         }
 
         $data = array(
-                        'userId' => $_SESSION['userid'],
+                        'userId' => $userId,
                         'groupId' => $groupId,
                         'position' => $position,
                         'environment' => $environment,
@@ -261,18 +388,20 @@ class ApiController extends Controller {
         echo json_encode($result);
     }
 
-    public function uploadImageToBCS($file = '', $type = ''){
-        $types = array('image/jpeg' => '.jpg', 'image/png' => '.png');
-        if(!array_key_exists($type, $types)){
+    private function uploadImageToBCS(){
+        $type = array('image/jpeg', 'image/png');
+        if(!in_array($_FILES['file']['type'], $type)){
             return false;
         }
+
+        $type = $_FILES['file']['type'];
 
         $host = 'bcs.duapp.com'; //online
         $ak = BCS_AK;
         $sk = BCS_SK;
         $bucket = 'here-photo';
-        $object = '/'.$_SESSION['username'].'/'.md5(microtime(true)).$types[$type];
-        $fileUpload = $file;
+        $object = '/'.$_SESSION['username'].'/'.md5(microtime(true)).preg_replace('/[^.]*\./', '.', $_FILES['file']['name']);
+        $fileUpload = $_FILES['file']['tmp_name'];
         $baidu_bcs = new \BaiduBCS ( $ak, $sk, $host );
 
         $opt = array ();
@@ -281,12 +410,12 @@ class ApiController extends Controller {
         $opt ['curlopts'] = array (
                 CURLOPT_CONNECTTIMEOUT => 10, 
                 CURLOPT_TIMEOUT => 1800 );
-        $response = $baidu_bcs->create_object_by_content ( $bucket, $object, $fileUpload, $opt );
+        $response = $baidu_bcs->create_object ( $bucket, $object, $fileUpload, $opt );
         
         if($response->isOK()){
 
-            // $meta = array ("Content-Type" => $type );
-            // $response = $baidu_bcs->set_object_meta ( $bucket, $object, $meta );
+            $meta = array ("Content-Type" => $type );
+            $response = $baidu_bcs->set_object_meta ( $bucket, $object, $meta );
             return $object;
         }else{
             return false;

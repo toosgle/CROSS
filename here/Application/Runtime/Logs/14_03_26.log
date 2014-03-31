@@ -2350,3 +2350,71 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004000s ]
 INFO: [ app_end ] --END-- [ RunTime:0.005000s ]
 
+[ 2014-03-26T19:57:27+08:00 ] ::1 /end/here/here/api/img?hash=/jianling/4220a03b19aa517818a9432f8305a4cc.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+NOTIC: [1024] [method:GET][url:http://bcs.duapp.com/here-photo/%2Fjianling%2F4220a03b19aa517818a9432f8305a4cc.jpg?sign=MBO:qm7QzugDqd3b7D7Djkq5Q9ZY:1TuDhVimlIAA3fNQr%2Bx%2FnZv4txE%3D] W:\END\here\Application\Here\BCS\bcs.class.php 第 1290 行.
+NOTIC: [8] curl_setopt(): CURLOPT_SSL_VERIFYHOST no longer accepts the value 1, value 2 will be used instead W:\END\here\Application\Here\BCS\libs\requestcore\requestcore.class.php 第 495 行.
+NOTIC: [1024] Get object success! W:\END\here\Application\Here\BCS\bcs.class.php 第 1290 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004001s ]
+
+[ 2014-03-26T19:57:31+08:00 ] ::1 /end/here/here/api/upload?_t=1395835051509
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+NOTIC: [8] Undefined index: file W:\END\here\Application\Here\Controller\ApiController.class.php 第 265 行.
+
+[ 2014-03-26T19:58:36+08:00 ] ::1 /end/here/here/api/upload?_t=1395835116291
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003001s ]
+NOTIC: [8] Undefined index: file W:\END\here\Application\Here\Controller\ApiController.class.php 第 265 行.
+
+[ 2014-03-26T19:58:58+08:00 ] ::1 /end/here/here/api/upload
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003000s ]
+NOTIC: [1024] [method:PUT][url:http://bcs.duapp.com/here-photo/%2Fjianling%2F354c14a2d65afc1e06af540b4e03411c.jpg?sign=MBO:qm7QzugDqd3b7D7Djkq5Q9ZY:7BJql0%2FLWKy9J1pnadOFvIEtHV4%3D] W:\END\here\Application\Here\BCS\bcs.class.php 第 1290 行.
+NOTIC: [8] curl_setopt(): CURLOPT_SSL_VERIFYHOST no longer accepts the value 1, value 2 will be used instead W:\END\here\Application\Here\BCS\libs\requestcore\requestcore.class.php 第 495 行.
+NOTIC: [1024] Create object[/jianling/354c14a2d65afc1e06af540b4e03411c.jpg] file[C:\xampp\tmp\php9EF4.tmp] success! W:\END\here\Application\Here\BCS\bcs.class.php 第 1290 行.
+NOTIC: [1024] [method:PUT][url:http://bcs.duapp.com/here-photo/%2Fjianling%2F354c14a2d65afc1e06af540b4e03411c.jpg?sign=MBO:qm7QzugDqd3b7D7Djkq5Q9ZY:7BJql0%2FLWKy9J1pnadOFvIEtHV4%3D] W:\END\here\Application\Here\BCS\bcs.class.php 第 1290 行.
+NOTIC: [8] curl_setopt(): CURLOPT_SSL_VERIFYHOST no longer accepts the value 1, value 2 will be used instead W:\END\here\Application\Here\BCS\libs\requestcore\requestcore.class.php 第 495 行.
+NOTIC: [8] Array to string conversion W:\END\here\Application\Here\BCS\libs\requestcore\requestcore.class.php 第 538 行.
+NOTIC: [1024] Copy object success! W:\END\here\Application\Here\BCS\bcs.class.php 第 1290 行.
+NOTIC: [1024] Set object meta success! W:\END\here\Application\Here\BCS\bcs.class.php 第 1290 行.
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead W:\END\here\ThinkPHP\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `photo` [ RunTime:0.025002s ]
+SQL: INSERT INTO `photo` (`userId`,`groupId`,`position`,`environment`,`measurement`,`direction`,`hash`) VALUES (1,null,null,null,null,null,'/jianling/354c14a2d65afc1e06af540b4e03411c.jpg') [ RunTime:0.065007s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004000s ]
+
+[ 2014-03-26T19:59:14+08:00 ] ::1 /end/here/here/api/img?hash=/jianling/354c14a2d65afc1e06af540b4e03411c.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.005000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005000s ]
+NOTIC: [1024] [method:GET][url:http://bcs.duapp.com/here-photo/%2Fjianling%2F354c14a2d65afc1e06af540b4e03411c.jpg?sign=MBO:qm7QzugDqd3b7D7Djkq5Q9ZY:WT7t0J%2BWgovxi9vOGE2rUzvGFPw%3D] W:\END\here\Application\Here\BCS\bcs.class.php 第 1290 行.
+NOTIC: [8] curl_setopt(): CURLOPT_SSL_VERIFYHOST no longer accepts the value 1, value 2 will be used instead W:\END\here\Application\Here\BCS\libs\requestcore\requestcore.class.php 第 495 行.
+NOTIC: [1024] Get object success! W:\END\here\Application\Here\BCS\bcs.class.php 第 1290 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.006000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.006000s ]
+

@@ -54,8 +54,6 @@
             </form> 
         </fieldset>
 
-        <img src="http://localhost/end/here/here/api/img?hash=/jianling/4220a03b19aa517818a9432f8305a4cc.jpg" />
-
         <script type="text/javascript">
             $('#get_user').click(function(){
                 Here.api.get('/api/get_user', {
@@ -141,55 +139,26 @@
             $('#upload').click(function(e){
                 e.preventDefault();
 
+                var fd = new FormData();
+                fd.append('photoId', 3);
+                fd.append('file', $('#file')[0].files[0]);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://localhost/end/here/here/api/upload', true);
+                xhr.onload = function(e) {
+                    console.log(e)
+                };
 
-                // $.ajax({
-                //     type: 'POST',
-                //     url: 'http://localhost/end/here/here/api/upload',
-                //     data: {
-                //         photoId: 3,
-                //         file: $('#file')[0].value,
-                //         position: '北纬32°，东经123°',
-                //         measurement: '1280*760'
-                //     },
-                //     mimeType: 'application/octet-stream',
-                //     success: function(data){
-                //         console.log(data);
-                //     },
-                //     error: function(xhr, errorType, error){
-                //         console.log(arguments);
-                //     }
-                // })
-                // 
-                // 
-                
+                xhr.send(fd);
 
-                var reader = new FileReader();
-
-                // Closure to capture the file information.
-                reader.onload = (function(theFile) {
-                    return function(e) {
-                        Here.api.post('/api/upload', {
-                            photoId: 3,
-                            file: e.target.result,
-                            type: $('#file')[0].files[0].type,
-                            position: '北纬32°，东经123°',
-                            measurement: '1280*760'
-                        }, {
-                            success: function(data){
-                                console.log(data);
-                            },
-                            error: function(data){
-                                console.log(data);
-                            }
-                        });
-                    };
-                })($('#file')[0].files[0]);
-
-                // Read in the image file as a data URL.
-                reader.readAsDataURL($('#file')[0].files[0]);
-
-
-                
+                return;
+                Here.api.post('/api/upload', fd, {
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
             });
         </script>
     </body>
